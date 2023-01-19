@@ -1,21 +1,5 @@
 <app-global-error></app-global-error>
-<div class="max-w-2xl container mx-auto pt-5">
-  <h1 class="font-bold text-center mb-2 text-lg">{{ title | titlecase }}</h1>
-  <input
-    [(ngModel)]="term"
-    class="mb-2 border py-2 px-4 w-full"
-    placeholder="filter products..."
-  />
-  <h2 *ngIf="loading" class="font-bold text-center mb-2 text-lg">
-    {{ loadText | uppercase }}
-  </h2>
-  <div *ngIf="products$ | async as products">
-    <app-product
-      *ngFor="let product of products | filterProducts : term; let i = index"
-      [product]="product"
-    ></app-product>
-    <app-modal title="Create N ew Product">
-      <app-create-product></app-create-product>
-    </app-modal>
-  </div>
+<app-navigation></app-navigation>
+<div class="max-w-2xl container mx-auto pt-5 mt-[50px]">
+  <router-outlet></router-outlet>
 </div>

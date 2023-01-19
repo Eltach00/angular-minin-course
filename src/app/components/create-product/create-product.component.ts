@@ -1,6 +1,8 @@
 import { formatCurrency } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalService } from 'src/app/services/modal.service';
+import ProductService from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-create-product',
@@ -9,7 +11,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class CreateProductComponent {
   productForm: FormGroup;
-  constructor() {
+  constructor(
+    private productService: ProductService,
+    private modalService: ModalService
+  ) {
     this.productForm = new FormGroup({
       title: new FormControl('', [
         Validators.required,
@@ -22,6 +27,18 @@ export class CreateProductComponent {
   }
 
   onSubmit() {
-    console.log(this.productForm.value);
+    this.productService
+      .create({
+        title: this.productForm.controls.title.value,
+        price: 13.5,
+        description: 'lorem ipsum set',
+        image: 'https://i.pravatar.cc',
+        category: 'electronic',
+        rating: {
+          rate: 3,
+          count: 3,
+        },
+      })
+      .subscribe(() => this.modalService.close());
   }
 }
