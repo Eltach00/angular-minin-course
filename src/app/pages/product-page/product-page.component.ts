@@ -22,6 +22,12 @@ export class ProductPageComponent implements OnInit {
     public modalService: ModalService
   ) {}
 
+  filterProducts(products: Iproduct[], search: string): Iproduct[] {
+    return products.filter((pr) =>
+      pr.title.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
   ngOnInit(): void {
     this.loading = true;
     this.productService.getAll().subscribe(() => {
